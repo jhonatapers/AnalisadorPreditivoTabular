@@ -17,17 +17,16 @@ public class LeitorGramatica implements ILeitorGramatica {
     public Gramatica read(String path) {
         try (BufferedReader buffRead = new BufferedReader(new FileReader(path))) {
 
-            
-            //SimboloGerador simboloGeradorInicial = DeserializeLine(line);
-
             List<SimboloGerador> simbolosGeradores = new LinkedList<SimboloGerador>();
-
+            
+            simbolosGeradores.add(DeserializeLine(buffRead.readLine(), true));
+        
             String line = buffRead.readLine();
             while (true) {
                 if (line == null)
                     break;
                 else
-                    simbolosGeradores.add(DeserializeLine(line));
+                    simbolosGeradores.add(DeserializeLine(line, false));
 
                 line = buffRead.readLine();
             }
@@ -43,7 +42,7 @@ public class LeitorGramatica implements ILeitorGramatica {
         return null;
     }
 
-    private SimboloGerador DeserializeLine(String fileLine) {
+    private SimboloGerador DeserializeLine(String fileLine, boolean inicial) {
         String[] geradorXProducoes = fileLine.replace(" ", "").split("->");
 
         String simboloGerador = geradorXProducoes[0];
@@ -58,8 +57,7 @@ public class LeitorGramatica implements ILeitorGramatica {
             producoes.add(new Producao(simbolosProducao));
         }
         
-
-        return new SimboloGerador(simboloGerador, producoes);
+        return new SimboloGerador(simboloGerador, inicial, producoes);
     }
 
 }

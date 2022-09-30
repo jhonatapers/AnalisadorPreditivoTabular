@@ -7,14 +7,17 @@ public class SimboloGerador {
 
     private String _simboloGerador;
 
+    private boolean _inicial;
+
     private List<Producao> _producoes;
 
     private List<Simbolo> _firsts;
 
     private List<Simbolo> _follows;
 
-    public SimboloGerador(String simboloGerador, List<Producao> producoes) {
+    public SimboloGerador(String simboloGerador, boolean inicial, List<Producao> producoes) {
         _simboloGerador = simboloGerador;
+        _inicial = inicial;
         _producoes = producoes;
 
         _firsts = new LinkedList<Simbolo>();
@@ -23,6 +26,10 @@ public class SimboloGerador {
 
     public String getSimboloGerador() {
         return _simboloGerador;
+    }
+    
+    public boolean isInicial() {
+        return _inicial;
     }
 
     public List<Producao> getProducoes() {
