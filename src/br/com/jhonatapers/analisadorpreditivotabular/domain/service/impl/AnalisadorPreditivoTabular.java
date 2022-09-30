@@ -13,11 +13,11 @@ public class AnalisadorPreditivoTabular implements IAnalisadorPreditivoTabular {
     @Override
     public Gramatica firstsAndFollows(Gramatica gramatica) {
 
-        for (SimboloGerador simboloGerador : gramatica.getSimboloesGeradores()) {
+        for (SimboloGerador simboloGerador : gramatica.getSimbolosGeradores()) {
             simboloGerador.setFirsts(firts(simboloGerador.getSimboloGerador(), gramatica));
         }
 
-        for (SimboloGerador simboloGerador : gramatica.getSimboloesGeradores()) {
+        for (SimboloGerador simboloGerador : gramatica.getSimbolosGeradores()) {
             simboloGerador.setFollow(follows(simboloGerador.getSimboloGerador(), gramatica));
         }
 
@@ -28,7 +28,7 @@ public class AnalisadorPreditivoTabular implements IAnalisadorPreditivoTabular {
 
         List<Simbolo> firts = new LinkedList<Simbolo>();
 
-        gramatica.getSimboloesGeradores()
+        gramatica.getSimbolosGeradores()
                 .stream()
                 .filter(s -> s.getSimboloGerador().equals(simboloGerador))
                 .forEach(s -> {
@@ -52,6 +52,8 @@ public class AnalisadorPreditivoTabular implements IAnalisadorPreditivoTabular {
 
     private List<Simbolo> follows(String simboloGerador, Gramatica gramatica) {
         List<Simbolo> follows = new LinkedList<Simbolo>();
+
+        
 
 
         return follows;

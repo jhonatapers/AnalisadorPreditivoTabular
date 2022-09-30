@@ -4,18 +4,18 @@ import java.util.List;
 
 public class Gramatica {
 
-    private List<SimboloGerador> _simboloesGeradores;
+    private List<SimboloGerador> _simbolosGeradores;
 
     public Gramatica(List<SimboloGerador> simbolosGeradores) {
-        _simboloesGeradores = simbolosGeradores;
+        _simbolosGeradores = simbolosGeradores;
     }
 
     public SimboloGerador getInicial() {
-        return _simboloesGeradores.get(0);
+        return _simbolosGeradores.get(0);
     }
 
-    public List<SimboloGerador> getSimboloesGeradores() {
-        return _simboloesGeradores;
+    public List<SimboloGerador> getSimbolosGeradores() {
+        return _simbolosGeradores;
     }
 
 }
