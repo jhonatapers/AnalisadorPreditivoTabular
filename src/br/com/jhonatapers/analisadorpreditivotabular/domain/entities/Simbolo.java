@@ -15,7 +15,7 @@ public class Simbolo {
     public Simbolo(String simbolo) {
         _simbolo = simbolo;
 
-        if(Pattern.matches("[a-z]|[0-9]|"+ App.PALAVRA_VAZIA, simbolo))
+        if(!Pattern.matches("(?![" + App.PALAVRA_VAZIA + "])[A-Z]", simbolo))
             _terminal = true;
 
         if(Pattern.matches( App.PALAVRA_VAZIA, simbolo))
