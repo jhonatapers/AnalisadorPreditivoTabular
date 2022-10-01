@@ -51,10 +51,111 @@ public class AnalisadorPreditivoTabular implements IAnalisadorPreditivoTabular {
     }
 
     private List<Simbolo> follows(String simboloGerador, Gramatica gramatica) {
+
         List<Simbolo> follows = new LinkedList<Simbolo>();
 
-        
+        gramatica.getSimbolosGeradores()
+                .stream()
+                .filter(gerador -> {
+                    return gerador.getProducoes()
+                            .stream()
+                            .filter(producao -> {
+                                return producao.getSimbolos()
+                                        .stream()
+                                        .filter(simboloProducao -> {
+                                            return simboloProducao.getSimbolo().equals(simboloGerador);
+                                        }).findFirst().isPresent();
+                            }).findFirst().isPresent();
+                }).forEach(gerador -> {
 
+                    gerador.getProducoes()
+                            .stream()
+                            .filter(producao -> {
+                                return producao.getSimbolos()
+                                        .stream()
+                                        .filter(simboloProducao -> {
+                                            return simboloProducao.getSimbolo().equals(simboloGerador);
+                                        }).findFirst().isPresent();
+                            }).forEach(producao -> {
+
+                                for (int i = 0; i < producao.getSimbolos().size(); i++) {
+
+                                    Simbolo simboloAtual = producao.getSimbolos().get(i);
+
+                                    if (!simboloAtual.getSimbolo().equals(simboloGerador) || simboloAtual.isTerminal())
+                                        continue;
+
+                                    if (gramatica.getInicial().getSimboloGerador().equals(simboloGerador)) {
+
+                                        boolean contemSimboloPilha = follows
+                                                .stream()
+                                                .filter(follow -> {
+                                                    return follow.getSimbolo().equals("$");
+                                                })
+                                                .findFirst()
+                                                .isPresent();
+
+                                        if (!contemSimboloPilha) {
+                                            follows.add(new Simbolo("$"));
+                                        }
+                                    }
+
+                                    if (i < producao.getSimbolos().size() - 1) {
+                                        Simbolo proxiSimbolo = producao.getSimbolos().get(i + 1);
+
+                                        if (proxiSimbolo.isTerminal()) {
+                                            follows.add(proxiSimbolo);
+                                            continue;
+                                        }
+
+                                        SimboloGerador geradorFollow = gramatica.getSimbolosGeradores()
+                                                .stream()
+                                                .filter(geradorFollowAux -> {
+                                                    return geradorFollowAux.getSimboloGerador()
+                                                            .equals(proxiSimbolo.getSimbolo());
+                                                }).findFirst().get();
+
+                                        geradorFollow.getFirsts()
+                                                .stream()
+                                                .filter(first -> {
+                                                    return !first.isPalavraVazia() && !follows
+                                                            .stream()
+                                                            .filter(follow -> {
+                                                                return follow.getSimbolo().equals(first.getSimbolo());
+                                                            }).findFirst().isPresent();
+                                                }).forEach(first -> {
+                                                    follows.add(first);
+                                                });
+
+                                        boolean produzPalavraVazia = geradorFollow.getFirsts()
+                                                .stream()
+                                                .filter(f -> {
+                                                    return f.isPalavraVazia();
+                                                }).findFirst()
+                                                .isPresent();
+
+                                        if (produzPalavraVazia) {
+                                            follows(geradorFollow.getSimboloGerador(), gramatica)
+                                                    .stream()
+                                                    .filter(follow -> {
+                                                        return !follows
+                                                                .stream()
+                                                                .filter(f -> {
+                                                                    return f.getSimbolo().equals(follow.getSimbolo());
+                                                                })
+                                                                .findAny()
+                                                                .isPresent();
+                                                    })
+                                                    .forEach(follow -> {
+                                                        follows.add(follow);
+                                                    });
+                                        }
+
+                                    }
+
+                                }
+                            });
+                });
 
         return follows;
     }
