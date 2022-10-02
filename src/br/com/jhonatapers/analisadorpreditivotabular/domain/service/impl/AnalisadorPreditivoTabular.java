@@ -199,6 +199,27 @@ public class AnalisadorPreditivoTabular implements IAnalisadorPreditivoTabular {
                                                     });
                                         }
 
+                                    } else {
+
+                                        if (gerador.getSimboloGerador().equals(simboloGerador))
+                                            continue;
+
+                                        follows(gerador.getSimboloGerador(), gramatica)
+                                                .stream()
+                                                .filter(follow -> {
+                                                    return !follows
+                                                            .stream()
+                                                            .filter(f -> {
+                                                                return f.getSimbolo().equals(follow.getSimbolo());
+                                                            })
+                                                            .findAny()
+                                                            .isPresent();
+                                                })
+                                                .forEach(follow -> {
+                                                    follows.add(follow);
+                                                });
+
+                                        continue;
                                     }
 
                                 }
