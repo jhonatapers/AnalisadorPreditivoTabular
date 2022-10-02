@@ -1,5 +1,6 @@
 package br.com.jhonatapers.analisadorpreditivotabular.domain.entities;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -10,6 +11,8 @@ public class SimboloGerador {
     private boolean _inicial;
 
     private List<Producao> _producoes;
+
+    private HashMap<Simbolo, Producao> _linhaTabela;
 
     private List<Simbolo> _firsts;
 
@@ -52,4 +55,12 @@ public class SimboloGerador {
         this._follows = _follows;
     }
     
+    public HashMap<Simbolo, Producao> getLinhaTabela() {
+        return _linhaTabela;
+    }
+
+    public void setLinhaTabela(HashMap<Simbolo, Producao> _linhaTabela) {
+        this._linhaTabela = _linhaTabela;
+    }
+
 }

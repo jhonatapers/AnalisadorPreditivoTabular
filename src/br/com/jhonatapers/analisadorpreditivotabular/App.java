@@ -17,11 +17,11 @@ public class App {
     public static void main(String[] args) throws Exception {
 
         ILeitorGramatica leitor = new LeitorGramatica();
-        IAnalisadorPreditivoTabular analisador =  new AnalisadorPreditivoTabular();
+        IAnalisadorPreditivoTabular analisador = new AnalisadorPreditivoTabular();
         Gramatica gramatica = leitor.read(new File(".").getCanonicalPath() + LOCAL_PATH + "\\gramatica");
 
-
         analisador.firstsAndFollows(gramatica);
-
+        analisador.tabela(gramatica);
+        System.out.println(gramatica);
     }
 }

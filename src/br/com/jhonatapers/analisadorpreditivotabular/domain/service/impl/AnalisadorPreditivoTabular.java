@@ -1,9 +1,11 @@
 package br.com.jhonatapers.analisadorpreditivotabular.domain.service.impl;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
 import br.com.jhonatapers.analisadorpreditivotabular.domain.entities.Gramatica;
+import br.com.jhonatapers.analisadorpreditivotabular.domain.entities.Producao;
 import br.com.jhonatapers.analisadorpreditivotabular.domain.entities.Simbolo;
 import br.com.jhonatapers.analisadorpreditivotabular.domain.entities.SimboloGerador;
 import br.com.jhonatapers.analisadorpreditivotabular.domain.service.IAnalisadorPreditivoTabular;
@@ -24,6 +26,50 @@ public class AnalisadorPreditivoTabular implements IAnalisadorPreditivoTabular {
         return gramatica;
     }
 
+    public Gramatica tabela(Gramatica gramatica) {
+
+        List<HashMap<Simbolo, Producao>> tabela = new LinkedList<HashMap<Simbolo, Producao>>();
+
+        gramatica.getSimbolosGeradores()
+                .forEach(gerador -> {
+
+                    HashMap<Simbolo, Producao> linhaTabela = new HashMap<Simbolo, Producao>();
+
+                    gerador.getProducoes()
+                            .forEach(producao -> {
+
+                                Simbolo firstSimboloProducao = producao.getSimbolos().get(0);
+                                if (firstSimboloProducao.isPalavraVazia()) {
+
+                                    follows(gerador.getSimboloGerador(), gramatica)
+                                            .forEach(follow -> {
+                                                linhaTabela.put(firstSimboloProducao, producao);
+                                            });
+
+                                } else if (firstSimboloProducao.isTerminal()) {
+
+                                    linhaTabela.put(firstSimboloProducao, producao);
+                                    tabela.add(linhaTabela);
+
+                                } else {
+
+                                    firts(gerador.getSimboloGerador(), gramatica)
+                                            .stream()
+                                            .filter(first -> !first.isPalavraVazia())
+                                            .forEach(first -> {
+                                                linhaTabela.put(firstSimboloProducao, producao);
+                                            });
+
+                                }
+
+                            });
+
+                    gerador.setLinhaTabela(linhaTabela);
+                });
+
+        return gramatica;
+    }
+
     private List<Simbolo> firts(String simboloGerador, Gramatica gramatica) {
 
         List<Simbolo> firts = new LinkedList<Simbolo>();
@@ -36,13 +82,15 @@ public class AnalisadorPreditivoTabular implements IAnalisadorPreditivoTabular {
                             .forEach(p -> {
                                 Simbolo simboloFirst = p.getSimbolos().get(0);
 
-                                if (simboloFirst.isTerminal())
+                                if (simboloFirst.isTerminal()) {
                                     firts.add(simboloFirst);
-                                else
+                                } else {
                                     firts(simboloFirst.getSimbolo(), gramatica)
                                             .forEach(f -> {
                                                 firts.add(f);
                                             });
+                                }
+
                                 ;
                             });
                 });
