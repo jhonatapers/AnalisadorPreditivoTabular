@@ -1,3 +1,5 @@
-Z ->XYZ|d
-Y ->c| E
-X -> Y|a
+S -> TG
+G -> +TG | E
+T -> FH
+H -> *FH | E
+F -> ( S ) | i
