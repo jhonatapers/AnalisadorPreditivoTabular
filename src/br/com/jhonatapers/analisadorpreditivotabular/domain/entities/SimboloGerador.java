@@ -12,7 +12,7 @@ public class SimboloGerador {
 
     private List<Producao> _producoes;
 
-    private HashMap<Simbolo, Producao> _linhaTabela;
+    private List<Relacao> _linhaTabela;
 
     private List<Simbolo> _firsts;
 
@@ -55,11 +55,11 @@ public class SimboloGerador {
         this._follows = _follows;
     }
     
-    public HashMap<Simbolo, Producao> getLinhaTabela() {
+    public List<Relacao> getLinhaTabela() {
         return _linhaTabela;
     }
 
-    public void setLinhaTabela(HashMap<Simbolo, Producao> _linhaTabela) {
+    public void setLinhaTabela(List<Relacao> _linhaTabela) {
         this._linhaTabela = _linhaTabela;
     }
 

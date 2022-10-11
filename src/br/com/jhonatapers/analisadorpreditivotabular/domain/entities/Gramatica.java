@@ -85,7 +85,6 @@ public class Gramatica {
             result = result.substring(0, result.length() - 1);
         }
 
-
         return result;
     }
 
