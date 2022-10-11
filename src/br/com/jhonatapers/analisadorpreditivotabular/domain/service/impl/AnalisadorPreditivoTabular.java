@@ -1,11 +1,11 @@
 package br.com.jhonatapers.analisadorpreditivotabular.domain.service.impl;
 
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Stack;
 
 import br.com.jhonatapers.analisadorpreditivotabular.domain.entities.Gramatica;
-import br.com.jhonatapers.analisadorpreditivotabular.domain.entities.Producao;
+import br.com.jhonatapers.analisadorpreditivotabular.domain.entities.PassoReconhecimento;
 import br.com.jhonatapers.analisadorpreditivotabular.domain.entities.Relacao;
 import br.com.jhonatapers.analisadorpreditivotabular.domain.entities.Simbolo;
 import br.com.jhonatapers.analisadorpreditivotabular.domain.entities.SimboloGerador;
@@ -29,12 +29,8 @@ public class AnalisadorPreditivoTabular implements IAnalisadorPreditivoTabular {
 
     public Gramatica tabela(Gramatica gramatica) {
 
-        //List<HashMap<Simbolo, Producao>> tabela = new LinkedList<HashMap<Simbolo, Producao>>();
-
         gramatica.getSimbolosGeradores()
                 .forEach(gerador -> {
-
-                    //HashMap<Simbolo, Producao> linhaTabela = new HashMap<Simbolo, Producao>();
 
                     List<Relacao> linhaTabela = new LinkedList<Relacao>();
 
@@ -229,6 +225,27 @@ public class AnalisadorPreditivoTabular implements IAnalisadorPreditivoTabular {
                 });
 
         return follows;
+    }
+
+    @Override
+    public List<PassoReconhecimento> reconhecimento(Gramatica gramatica, String entrada) {
+
+        Stack<PassoReconhecimento> passoReconhecimento = new Stack<PassoReconhecimento>();
+        Stack<Simbolo> pilhaEntrada = leEntrada(entrada);
+
+        
+
+
+        return passoReconhecimento;
+    }
+
+    private Stack<Simbolo> leEntrada(String entrada) {
+        Stack<Simbolo> pilhaEntrada = new Stack<Simbolo>();
+
+        for (String simboloProducao : entrada.replace(" ", "").split("|"))
+            pilhaEntrada.add(new Simbolo(simboloProducao));
+
+        return pilhaEntrada;
     }
 
 }

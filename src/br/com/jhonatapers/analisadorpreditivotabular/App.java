@@ -14,6 +14,8 @@ public class App {
 
     public static final String PALAVRA_VAZIA = "E";
 
+    public static final String ENTRADA = "i + i * i";
+
     public static void main(String[] args) throws Exception {
 
         ILeitorGramatica leitor = new LeitorGramatica();
@@ -22,6 +24,11 @@ public class App {
 
         analisador.firstsAndFollows(gramatica);
         analisador.tabela(gramatica);
+        //Parte 1 e 2
         System.out.println(gramatica);
+
+        //Parte 3
+        analisador.reconhecimento(gramatica, ENTRADA);
+
     }
 }

@@ -1,6 +1,5 @@
 package br.com.jhonatapers.analisadorpreditivotabular.domain.entities;
 
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
