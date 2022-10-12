@@ -27,7 +27,7 @@ public class App {
         analisador.firstsAndFollows(gramatica);
         analisador.tabela(gramatica);
         //Parte 1 e 2
-        System.out.println(gramatica);
+        System.out.println(gramatica); //falta printar a tabela
 
         System.out.println("\r\n");
         System.out.println("RECONHECIMENTO -> " + ENTRADA);
