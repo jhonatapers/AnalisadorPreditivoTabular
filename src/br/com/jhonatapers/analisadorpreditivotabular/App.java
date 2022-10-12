@@ -29,6 +29,9 @@ public class App {
         //Parte 1 e 2
         System.out.println(gramatica);
 
+        System.out.println("\r\n");
+        System.out.println("RECONHECIMENTO -> " + ENTRADA);
+
         //Parte 3
         Queue<PassoReconhecimento> passosReconhecimento = analisador.reconhecimento(gramatica, ENTRADA);
 
