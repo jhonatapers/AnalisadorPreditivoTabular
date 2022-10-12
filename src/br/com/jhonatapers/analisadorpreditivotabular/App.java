@@ -1,8 +1,10 @@
 package br.com.jhonatapers.analisadorpreditivotabular;
 
 import java.io.File;
+import java.util.Queue;
 
 import br.com.jhonatapers.analisadorpreditivotabular.domain.entities.Gramatica;
+import br.com.jhonatapers.analisadorpreditivotabular.domain.entities.PassoReconhecimento;
 import br.com.jhonatapers.analisadorpreditivotabular.domain.service.IAnalisadorPreditivoTabular;
 import br.com.jhonatapers.analisadorpreditivotabular.domain.service.ILeitorGramatica;
 import br.com.jhonatapers.analisadorpreditivotabular.domain.service.impl.AnalisadorPreditivoTabular;
@@ -28,7 +30,13 @@ public class App {
         System.out.println(gramatica);
 
         //Parte 3
-        analisador.reconhecimento(gramatica, ENTRADA);
+        Queue<PassoReconhecimento> passosReconhecimento = analisador.reconhecimento(gramatica, ENTRADA);
+
+        for (PassoReconhecimento passoReconhecimento : passosReconhecimento) {
+            System.out.println(passoReconhecimento.toString() + "\r\n");
+        }
+
+
 
     }
 }

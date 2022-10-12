@@ -242,24 +242,21 @@ public class AnalisadorPreditivoTabular implements IAnalisadorPreditivoTabular {
         pilha.add(new Simbolo("$"));
         pilha.add(new Simbolo(gramatica.getInicial().getSimboloGerador()));
 
-        // Aqui printar estado
-        passoReconhecimento.add(new PassoReconhecimento((Stack) pilha.clone(), (Stack) _entrada.clone(), null, true));
+        passoReconhecimento.add(new PassoReconhecimento((Stack) pilha.clone(), (Stack) _entrada.clone(), null, null, true));
 
         while (!_entrada.empty()) {
 
             Simbolo simboloTopoPilha = pilha.peek();
 
             if (simboloTopoPilha.getSimbolo().equals("$")) {
-                passoReconhecimento
-                        .add(new PassoReconhecimento((Stack) pilha.clone(), (Stack) _entrada.clone(), null, true));
+                //passoReconhecimento.add(new PassoReconhecimento((Stack) pilha.clone(), (Stack) _entrada.clone(), null, null, true));
 
                 _entrada.pop();
                 continue;
             }
 
             if (simboloTopoPilha.isPalavraVazia()) {
-                passoReconhecimento
-                        .add(new PassoReconhecimento((Stack) pilha.clone(), (Stack) _entrada.clone(), null, true));
+                //passoReconhecimento.add(new PassoReconhecimento((Stack) pilha.clone(), (Stack) _entrada.clone(), null, null, true));
                 pilha.pop();
                 continue;
             }
@@ -292,7 +289,7 @@ public class AnalisadorPreditivoTabular implements IAnalisadorPreditivoTabular {
                     pilha.pop();
 
                     passoReconhecimento
-                            .add(new PassoReconhecimento((Stack) pilha.clone(), (Stack) _entrada.clone(), null, true));
+                            .add(new PassoReconhecimento((Stack) pilha.clone(), (Stack) _entrada.clone(), null, null, true));
 
                     continue;
                 }
@@ -339,13 +336,21 @@ public class AnalisadorPreditivoTabular implements IAnalisadorPreditivoTabular {
                     pilha.add(simbolo);
                 });
 
+                SimboloGerador geradorProducao = gramatica.getSimbolosGeradores()
+                    .stream()
+                    .filter(gerador -> {
+                        return gerador.getSimboloGerador().equals(simboloTopoPilha.getSimbolo());
+                    })
+                    .findFirst()
+                    .get();
+
                 passoReconhecimento
-                        .add(new PassoReconhecimento((Stack) pilha.clone(), (Stack) _entrada.clone(), producao, true));
+                        .add(new PassoReconhecimento((Stack) pilha.clone(), (Stack) _entrada.clone(), geradorProducao, producao, true));
                 continue;
             }
 
             passoReconhecimento
-                    .add(new PassoReconhecimento((Stack) pilha.clone(), (Stack) _entrada.clone(), null, false));
+                    .add(new PassoReconhecimento((Stack) pilha.clone(), (Stack) _entrada.clone(), null, null, false));
             break;
 
         }
