@@ -63,6 +63,28 @@ public class Gramatica {
 
         String result = "";
 
+        for (SimboloGerador simboloGerador : _simbolosGeradores) {
+
+            result += "\r\n";
+
+            result += "****************\r\n";
+            result += simboloGerador.getSimboloGerador() + " FIRSTS ->  ";
+            for (Simbolo first : simboloGerador.getFirsts()) {
+                result += first.getSimbolo() + ",";
+            }
+
+            result = result.substring(0, result.length() - 1);
+
+            result += "\r\n";
+
+            result += simboloGerador.getSimboloGerador() + " FOLLOWS ->  ";
+            for (Simbolo follow : simboloGerador.getFollows()) {
+                result += follow.getSimbolo() + ",";
+            }
+
+            result = result.substring(0, result.length() - 1);
+        }
+
         result += "\r\n";
         result += "\r\n";
 
