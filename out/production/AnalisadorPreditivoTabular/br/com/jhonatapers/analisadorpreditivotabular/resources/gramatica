@@ -1,0 +1,5 @@
+S -> TG
+G -> +TG | E
+T -> FH
+H -> *FH | E
+F -> ( S ) | i

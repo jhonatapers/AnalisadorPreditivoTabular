@@ -12,7 +12,7 @@ import br.com.jhonatapers.analisadorpreditivotabular.domain.service.impl.LeitorG
 
 public class App {
 
-    private static final String LOCAL_PATH = "\\src\\br\\com\\jhonatapers\\analisadorpreditivotabular\\resources";
+    private static final String LOCAL_PATH = "/src/br/com/jhonatapers/analisadorpreditivotabular/resources";
 
     public static final String PALAVRA_VAZIA = "E";
 
@@ -22,12 +22,12 @@ public class App {
 
         ILeitorGramatica leitor = new LeitorGramatica();
         IAnalisadorPreditivoTabular analisador = new AnalisadorPreditivoTabular();
-        Gramatica gramatica = leitor.read(new File(".").getCanonicalPath() + LOCAL_PATH + "\\gramatica");
+        Gramatica gramatica = leitor.read(new File(".").getCanonicalPath() + LOCAL_PATH + "/gramatica");
 
         analisador.firstsAndFollows(gramatica);
         analisador.tabela(gramatica);
         //Parte 1 e 2
-        System.out.println(gramatica); //falta printar a tabela
+        System.out.println(gramatica);
 
         System.out.println("\r\n");
         System.out.println("RECONHECIMENTO -> " + ENTRADA);
@@ -38,7 +38,6 @@ public class App {
         for (PassoReconhecimento passoReconhecimento : passosReconhecimento) {
             System.out.println(passoReconhecimento.toString() + "\r\n");
         }
-
 
 
     }
